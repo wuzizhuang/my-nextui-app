@@ -13,9 +13,30 @@ module.exports = {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            'code::before': {
+              content: '""'
+            },
+            'code::after': {
+              content: '""'
+            },
+            code: {
+              backgroundColor: theme('colors.gray.100'),
+              padding: '0.25rem 0.375rem',
+              borderRadius: '0.25rem',
+              fontWeight: '400',
+            },
+          },
+        },
+      }),
     },
   },
   darkMode: "class",
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [
+    nextui(),
+    require('@tailwindcss/typography')
+  ],
 };

@@ -1,0 +1,93 @@
+import Swal from 'sweetalert2';
+
+export const showQuotaInfo = (remainInfo, usedInfo, totalQuota) => {
+  const showInfo = `可用额度为: ${remainInfo}\n\n已用额度为: ${usedInfo}\n\n总额度为: ${totalQuota}`;
+  
+  return Swal.fire({
+    title: '额度信息',
+    html: showInfo.replace(/\n/g, '<br>'),
+    icon: 'info',
+    confirmButtonText: '确定',
+    confirmButtonColor: '#3085d6',
+    width: '600px',
+    customClass: {
+      container: 'custom-swal-container',
+      popup: 'custom-swal-popup',
+      title: 'custom-swal-title',
+      content: 'custom-swal-content'
+    },
+    showClass: {
+      popup: 'animate__animated animate__fadeInDown'
+    },
+    hideClass: {
+      popup: 'animate__animated animate__fadeOutUp'
+    }
+  });
+};
+
+export const showError = (message) => {
+  return Swal.fire({
+    title: '错误',
+    text: message,
+    icon: 'error',
+    confirmButtonText: '确定'
+  });
+};
+
+export const showSuccess = (message) => {
+  return Swal.fire({
+    title: '成功',
+    text: message,
+    icon: 'success',
+    confirmButtonText: '确定'
+  });
+}
+export const showFastSuccess = (message) => {
+  return Swal.fire({
+    title: '成功',
+    text: message,
+    icon: 'success',
+    timer: 1500,
+    showConfirmButton: false
+  });
+}
+export const displayResultsWithSweetAlert = (results) => {
+  // 将结果分类整合成 HTML 内容
+  const validModels = results.valid.map(
+      (result) => `<li>模型：<b>${result.model}</b>，响应时间：<b>${result.responseTime.toFixed(3)} 秒</b></li>`
+  ).join('');
+
+  const inconsistentModels = results.inconsistent.map(
+      (result) => `<li>请求的模型：<b>${result.model}</b>，返回的模型：<b>${result.returnedModel}</b>，响应时间：<b>${result.responseTime.toFixed(3)} 秒</b></li>`
+  ).join('');
+
+  const invalidModels = results.invalid.map(
+      (result) => `<li>模型：<b>${result.model}</b>，错误信息：<b>${result.error || result.responseText}</b></li>`
+  ).join('');
+
+  // 准备显示内容
+  const validContent = validModels ? `<ul>${validModels}</ul>` : `<p>没有有效的模型。</p>`;
+  const inconsistentContent = inconsistentModels ? `<ul>${inconsistentModels}</ul>` : `<p>没有不一致的模型。</p>`;
+  const invalidContent = invalidModels ? `<ul>${invalidModels}</ul>` : `<p>没有无效的模型。</p>`;
+
+  // 拼接内容
+  const htmlContent = `
+      <h3>✅ 有效模型</h3>
+      ${validContent}
+      <h3>⚠️ 不一致的模型</h3>
+      ${inconsistentContent}
+      <h3>❌ 无效模型</h3>
+      ${invalidContent}
+  `;
+
+  // 使用 SweetAlert2 显示结果
+  Swal.fire({
+      title: '测试结果',
+      html: htmlContent,
+      icon: 'info',
+      confirmButtonText: '确定',
+      width: '600px',
+      showCloseButton: true,
+      scrollbarPadding: false,
+  });
+};

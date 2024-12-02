@@ -1,12 +1,13 @@
 "use client";
 import { title } from "@/components/primitives";
-import {Accordion, AccordionItem} from "@nextui-org/react";
+import {Accordion, AccordionItem, Card, CardBody} from "@nextui-org/react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
 import {Button} from "@nextui-org/react";
 import { useState } from "react";
 
 import AIChat from "@/components/AI/AIChat/App";
 import ApiCheck from "@/components/AI/ApiCheck/page";
+import { Carter_One } from "next/font/google";
 
 export default function ToolsPage() {
     const [selectedTool, setSelectedTool] = useState("ShowAll");
@@ -49,7 +50,12 @@ export default function ToolsPage() {
             </div>
             
             <section className="w-full">
-                {renderTool()}
+                <Card radius="sm" shadow="sm" className="border-1 border-gray-200 p-4">
+                    <CardBody>
+                        {renderTool()}
+                    </CardBody>
+                </Card>
+                
             </section>
         </div>
     );
